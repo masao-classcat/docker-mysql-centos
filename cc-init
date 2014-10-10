@@ -14,7 +14,8 @@ DB_PASS=${DB_PASS:-ClassCat2014}
 
 #sed -i -e "s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 
-/usr/bin/mysqld_safe &
+/etc/init.d/mysqld start
+#/usr/bin/mysqld_safe &
 
 sleep 5
 
@@ -28,6 +29,7 @@ SQL2="grant select,update,insert,delete ON \`${DB_NAME}\`.* to \"${DB_USER}\"@\"
 echo $SQL2
 mysql -u root -p${DB_ROOT_PASS} -e "${SQL2}"
 
-mysqladmin -u root -p${DB_ROOT_PASS} shutdown
+/etc/init.d/mysqld stop
+#mysqladmin -u root -p${DB_ROOT_PASS} shutdown
 
 exec /usr/bin/mysqld_safe
